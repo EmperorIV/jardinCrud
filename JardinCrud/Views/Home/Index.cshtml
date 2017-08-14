@@ -1,0 +1,217 @@
+﻿@model JardinCrud.Models.AcudienteViewModel
+    @{
+        Layout = null;
+    }
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<div class="container" style="margin-top: 3%">
+    <a href="#" class="btn btn-info" onclick="agregarNuevoAcudiente(0)">Agregar nuevo Acudiente</a>
+    <br /><br />
+    <table class="table table-striped">
+        <thead> 
+        <tr>
+        
+            <th>
+                Cedula
+            </th>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Telefono
+            </th>
+            <th>
+                Direccion
+            </th>
+            <th>
+                Correo
+            </th>
+            <th>
+                Celular
+            </th>
+            <th>
+                Cambiar datos
+            </th>
+            <th>
+               Eliminar acudiente
+            </th>
+        </tr> 
+       
+           
+        </thead>
+        <tbody id="obtenerListaAcudientes">
+        <tr id="pantallaCarga" style="color : red">
+            
+        </tr>
+        </tbody>
+
+    </table>
+        
+    <div class="modal fade" id="modalPrincipal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a href="#" class="close" data-dismiss="modal">&times;</a>
+                    <h4 id="modalTitulo">
+                        123 
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <form id="form">
+                        <fieldset id="submitForm">
+                            @Html.HiddenFor(m => m.existe, new { @id= "existe", @value="noexiste"})
+                            <div class="form-group">
+                                @Html.TextBoxFor(m => m.ced, new { @id= "ced",@class="form-control",@placeholder="Cedula*"})
+                            </div>
+                            <div class="form-group">
+                                @Html.TextBoxFor(m => m.nom_ape, new { @id = "nom_ape", @class="form-control",@placeholder="Nombres*"})
+                            </div>
+                            <div class="form-group">
+                                @Html.TextBoxFor(m => m.tele, new { @id = "tele", @class="form-control",@placeholder="Telefono*"})
+                            </div>
+                            <div class="form-group">
+                                @Html.TextBoxFor(m => m.dire, new { @id = "dire", @class="form-control",@placeholder= "Direccion*"})
+                            </div>
+                            <div class="form-group">
+                                @Html.TextBoxFor(m => m.correo, new { @id = "correo", @class="form-control",@placeholder= "correo*" })
+                            </div>
+                            <div class="form-group">
+                                @Html.TextBoxFor(m => m.celular, new { @celular = "celular", @class="form-control",@placeholder= "celular*" })
+                            </div>
+                            <div class="form-group">
+                                <a href="#" class="btn btn-block btn-danger" id="guardarEstudiante">Guardar</a>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+     
+<div class="modal fade" id="confirmarEliminar">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+                <h4 id="modalTitulo">
+                    Eliminar Acudiente
+                </h4>
+            </div>
+            <div class="modal-body">
+                ¿Esta seguro que desea borrar esta información? 
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-primary" data-dismiss="modal">Cancelar</a>
+                <a href="#" class="btn btn-danger" onclick="confirmarEliminar()">Eliminar!</a>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+    $("#pantallaCarga").html("Cargando datos por favor espere!");
+    $.get("/Home/obteneracudientes", null, DataBind);
+    
+    function DataBind(acudientes) {
+        var setData = $("#obtenerListaAcudientes");
+        
+        for (var i = 0; i < acudientes.length; i++) {
+           
+            var Data = "<tr> class='row_" + acudientes[i].ced + "'>" +
+                "<td>" + acudientes[i].ced + "</td>" +
+                "<td>" + acudientes[i].nom_ape + "</td>" +
+                "<td>" + acudientes[i].tele + "</td>" +
+                "<td>" + acudientes[i].dire + "</td>" +
+                "<td>" + acudientes[i].correo + "</td>" +
+                "<td>" + acudientes[i].celular + "</td>" +
+                "<td>"+ 
+                "<a href='#' class='btn btn-warning' onclick='editarAcudiente(" + JSON.stringify(acudientes[i].ced)+")' >"+
+                "<span class='glyphicon glyphicon-edit'></span>"+
+                "</a>"+
+                "</td>" +
+                "<td>" +
+                "<a href='#' class='btn btn-danger' onclick='eliminarAcudiente(" + JSON.stringify(acudientes[i].ced)+")' >" +
+                "<span class='glyphicon glyphicon-trash'></span>" +
+                "</a>" +
+                "</td>" +
+                "</tr>";
+            setData.append(Data);
+            $("#pantallaCarga").html(" ");
+        }
+       
+    }
+    function agregarNuevoAcudiente(acudiente) {
+        $("#existe").val("noExiste");
+        $("#ced").prop("readonly", false);
+        $("#form")[0].reset();
+        $("#modalTitulo").html("Agregar nuevo acudiente");
+        $("#modalPrincipal").modal();
+    }
+    function test() {
+        alert("oprimio");
+    }
+    function editarAcudiente(cedula) {
+            
+        var url = "/Home/obtenerAcudientePorCedula?cedula=" + cedula;
+        $("#ced").prop("readonly", true);
+          $("#modalTitulo").html("Modificar  acudiente");
+          $("#modalPrincipal").modal();
+          $.ajax({
+              type: "GET",
+              url: url,
+              success: function(data) {
+                  var obj = JSON.parse(data);
+                  $("#ced").val(obj.ced);
+                  $("#nom_ape").val(obj.nom_ape);
+                  $("#tele").val(obj.tele);
+                  $("#dire").val(obj.dire);
+                  $("#correo").val(obj.correo);
+                  $("#celular").val(obj.celular);
+                  $("#existe").val("existe");
+              }
+          });
+
+    }
+    function eliminarAcudiente(cedula) {
+        $("#ced").val(cedula);
+        $("#confirmarEliminar").modal("show");
+       
+
+    }
+    function confirmarEliminar() {
+        var cedula = $("#ced").val();
+        $.ajax({
+            type: "Post",
+            url: "/Home/eliminarAcudiente?cedula=" + cedula ,
+          
+            success: function() {
+                alert("Se realizo la operacion!");
+                window.location.href = "/Home/Index";
+                $("#confirmarEliminar").modal("hide");
+                $("#row_" + cedula).remove();
+            }
+        });
+
+    }
+    $("#guardarEstudiante").click(function() {
+        var data = $("#submitForm").serialize();
+        $.ajax({
+            type: "Post",
+            url: "/Home/guardarAcudiente",
+            data : data,
+            success : function() {
+                alert("Se realizo la operacion!");
+                window.location.href = "/Home/Index";
+                $("#modalPrincipal").modal("hide");
+            }
+        })
+
+    })
+</script>

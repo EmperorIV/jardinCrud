@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="senasoft2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="dacudiente">
+    <Key>
+      <PropertyRef Name="ced" />
+    </Key>
+    <Property Name="ced" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="nom_ape" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="tele" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="dire" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="correo" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="celular" Type="varchar" MaxLength="15" Nullable="false" />
+  </EntityType>
+  <EntityType Name="datosnino">
+    <Key>
+      <PropertyRef Name="niup" />
+    </Key>
+    <Property Name="niup" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="nom_ape" Type="varchar" MaxLength="45" Nullable="false" />
+    <Property Name="tip_san" Type="varchar" MaxLength="4" Nullable="false" />
+    <Property Name="ciu_nac" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="ide_acu" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="fec_nac" Type="date" />
+    <Property Name="dir" Type="varchar" MaxLength="35" Nullable="false" />
+    <Property Name="tel" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="eps" Type="varchar" MaxLength="15" Nullable="false" />
+  </EntityType>
+  <EntityType Name="dmadrecomunitaria">
+    <Key>
+      <PropertyRef Name="ced" />
+    </Key>
+    <Property Name="ced" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="nom_ape" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="tel" Type="varchar" MaxLength="20" />
+    <Property Name="dir" Type="varchar" MaxLength="40" />
+    <Property Name="fec_nac" Type="date" />
+  </EntityType>
+  <EntityType Name="regasistencia">
+    <Key>
+      <PropertyRef Name="ide_asis" />
+    </Key>
+    <Property Name="niup" Type="varchar" MaxLength="20" />
+    <Property Name="fecha" Type="date" />
+    <Property Name="estado_nino" Type="varchar" MaxLength="20" />
+    <Property Name="ide_asis" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="regjardines">
+    <Key>
+      <PropertyRef Name="ide" />
+    </Key>
+    <Property Name="ide" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ced" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="nom_jar" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="dir" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="esta" Type="varchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="regnotas">
+    <Key>
+      <PropertyRef Name="idreg" />
+    </Key>
+    <Property Name="niup" Type="varchar" MaxLength="20" />
+    <Property Name="ano_escolar" Type="date" />
+    <Property Name="nivel" Type="varchar" MaxLength="20" />
+    <Property Name="nota" Type="varchar" MaxLength="2" />
+    <Property Name="fec" Type="date" />
+    <Property Name="descrip" Type="varchar" MaxLength="100" />
+    <Property Name="idreg" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__datosnino__ide_a__2A4B4B5E">
+    <End Role="dacudiente" Type="Self.dacudiente" Multiplicity="1" />
+    <End Role="datosnino" Type="Self.datosnino" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="dacudiente">
+        <PropertyRef Name="ced" />
+      </Principal>
+      <Dependent Role="datosnino">
+        <PropertyRef Name="ide_acu" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__regasisten__niup__2D27B809">
+    <End Role="datosnino" Type="Self.datosnino" Multiplicity="0..1" />
+    <End Role="regasistencia" Type="Self.regasistencia" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="datosnino">
+        <PropertyRef Name="niup" />
+      </Principal>
+      <Dependent Role="regasistencia">
+        <PropertyRef Name="niup" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__regjardines__ced__276EDEB3">
+    <End Role="dmadrecomunitaria" Type="Self.dmadrecomunitaria" Multiplicity="1" />
+    <End Role="regjardines" Type="Self.regjardines" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="dmadrecomunitaria">
+        <PropertyRef Name="ced" />
+      </Principal>
+      <Dependent Role="regjardines">
+        <PropertyRef Name="ced" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__regnotas__niup__300424B4">
+    <End Role="datosnino" Type="Self.datosnino" Multiplicity="0..1" />
+    <End Role="regnotas" Type="Self.regnotas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="datosnino">
+        <PropertyRef Name="niup" />
+      </Principal>
+      <Dependent Role="regnotas">
+        <PropertyRef Name="niup" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="senasoft2ModelStoreContainer">
+    <EntitySet Name="dacudiente" EntityType="Self.dacudiente" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="datosnino" EntityType="Self.datosnino" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="dmadrecomunitaria" EntityType="Self.dmadrecomunitaria" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="regasistencia" EntityType="Self.regasistencia" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="regjardines" EntityType="Self.regjardines" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="regnotas" EntityType="Self.regnotas" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__datosnino__ide_a__2A4B4B5E" Association="Self.FK__datosnino__ide_a__2A4B4B5E">
+      <End Role="dacudiente" EntitySet="dacudiente" />
+      <End Role="datosnino" EntitySet="datosnino" />
+    </AssociationSet>
+    <AssociationSet Name="FK__regasisten__niup__2D27B809" Association="Self.FK__regasisten__niup__2D27B809">
+      <End Role="datosnino" EntitySet="datosnino" />
+      <End Role="regasistencia" EntitySet="regasistencia" />
+    </AssociationSet>
+    <AssociationSet Name="FK__regjardines__ced__276EDEB3" Association="Self.FK__regjardines__ced__276EDEB3">
+      <End Role="dmadrecomunitaria" EntitySet="dmadrecomunitaria" />
+      <End Role="regjardines" EntitySet="regjardines" />
+    </AssociationSet>
+    <AssociationSet Name="FK__regnotas__niup__300424B4" Association="Self.FK__regnotas__niup__300424B4">
+      <End Role="datosnino" EntitySet="datosnino" />
+      <End Role="regnotas" EntitySet="regnotas" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

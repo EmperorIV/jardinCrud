@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="senasoft2ModelStoreContainer" CdmEntityContainer="senasoft2Entities">
+    <EntitySetMapping Name="dacudiente">
+      <EntityTypeMapping TypeName="senasoft2Model.dacudiente">
+        <MappingFragment StoreEntitySet="dacudiente">
+          <ScalarProperty Name="ced" ColumnName="ced" />
+          <ScalarProperty Name="nom_ape" ColumnName="nom_ape" />
+          <ScalarProperty Name="tele" ColumnName="tele" />
+          <ScalarProperty Name="dire" ColumnName="dire" />
+          <ScalarProperty Name="correo" ColumnName="correo" />
+          <ScalarProperty Name="celular" ColumnName="celular" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="datosnino">
+      <EntityTypeMapping TypeName="senasoft2Model.datosnino">
+        <MappingFragment StoreEntitySet="datosnino">
+          <ScalarProperty Name="niup" ColumnName="niup" />
+          <ScalarProperty Name="nom_ape" ColumnName="nom_ape" />
+          <ScalarProperty Name="tip_san" ColumnName="tip_san" />
+          <ScalarProperty Name="ciu_nac" ColumnName="ciu_nac" />
+          <ScalarProperty Name="ide_acu" ColumnName="ide_acu" />
+          <ScalarProperty Name="fec_nac" ColumnName="fec_nac" />
+          <ScalarProperty Name="dir" ColumnName="dir" />
+          <ScalarProperty Name="tel" ColumnName="tel" />
+          <ScalarProperty Name="eps" ColumnName="eps" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="dmadrecomunitaria">
+      <EntityTypeMapping TypeName="senasoft2Model.dmadrecomunitaria">
+        <MappingFragment StoreEntitySet="dmadrecomunitaria">
+          <ScalarProperty Name="ced" ColumnName="ced" />
+          <ScalarProperty Name="nom_ape" ColumnName="nom_ape" />
+          <ScalarProperty Name="tel" ColumnName="tel" />
+          <ScalarProperty Name="dir" ColumnName="dir" />
+          <ScalarProperty Name="fec_nac" ColumnName="fec_nac" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="regasistencia">
+      <EntityTypeMapping TypeName="senasoft2Model.regasistencia">
+        <MappingFragment StoreEntitySet="regasistencia">
+          <ScalarProperty Name="niup" ColumnName="niup" />
+          <ScalarProperty Name="fecha" ColumnName="fecha" />
+          <ScalarProperty Name="estado_nino" ColumnName="estado_nino" />
+          <ScalarProperty Name="ide_asis" ColumnName="ide_asis" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="regjardines">
+      <EntityTypeMapping TypeName="senasoft2Model.regjardines">
+        <MappingFragment StoreEntitySet="regjardines">
+          <ScalarProperty Name="ide" ColumnName="ide" />
+          <ScalarProperty Name="ced" ColumnName="ced" />
+          <ScalarProperty Name="nom_jar" ColumnName="nom_jar" />
+          <ScalarProperty Name="dir" ColumnName="dir" />
+          <ScalarProperty Name="esta" ColumnName="esta" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="regnotas">
+      <EntityTypeMapping TypeName="senasoft2Model.regnotas">
+        <MappingFragment StoreEntitySet="regnotas">
+          <ScalarProperty Name="niup" ColumnName="niup" />
+          <ScalarProperty Name="ano_escolar" ColumnName="ano_escolar" />
+          <ScalarProperty Name="nivel" ColumnName="nivel" />
+          <ScalarProperty Name="nota" ColumnName="nota" />
+          <ScalarProperty Name="fec" ColumnName="fec" />
+          <ScalarProperty Name="descrip" ColumnName="descrip" />
+          <ScalarProperty Name="idreg" ColumnName="idreg" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
